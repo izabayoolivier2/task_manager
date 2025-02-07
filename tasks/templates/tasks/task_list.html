@@ -1,0 +1,32 @@
+
+#the Search Form in the Task List Template
+<form method="GET">
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Search by title or description">
+    <select name="status">
+        <option value="">-- Status --</option>
+        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>In Progress</option>
+        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+
+#Create templates for listing, creating, editing, and deleting tasks
+{% for task in tasks %}
+    <div>
+        <h2>{{ task.title }}</h2>
+        <p>Status: {{ task.get_status_display }}</p>
+
+        <!-- Link to mark task as completed -->
+        {% if task.status != 'completed' %}
+            <a href="?mark_completed={{ task.pk }}">Mark as Completed</a>
+        {% else %}
+            <span>Completed</span>
+        {% endif %}
+
+        <a href="{% url 'task_detail' task.pk %}">View Details</a>
+        <a href="{% url 'task_edit' task.pk %}">Edit</a>
+        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+    </div>
+{% endfor %}

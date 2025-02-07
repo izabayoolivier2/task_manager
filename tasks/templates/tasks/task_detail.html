@@ -1,0 +1,6 @@
+<h1>{{ task.title }}</h1>
+<p>{{ task.description }}</p>
+<p>Due Date: {{ task.due_date }}</p>
+<p>Status: {{ task.get_status_display }}</p>
+<a href="{% url 'task_edit' task.pk %}">Edit</a>
+<a href="{% url 'task_delete' task.pk %}">Delete</a>
